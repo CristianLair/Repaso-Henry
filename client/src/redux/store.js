@@ -1,12 +1,16 @@
-import rootReducer from "./reducer";
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { createStore, applyMiddleware, compose } from "redux";
+import reducer from "./reducer";
 import thunk from "redux-thunk";
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
-// thunk nos permite trabajar con asincronismo en el front
+const composeEnhancers =
+    typeof window === 'object' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    }) : compose;
 
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
+);
+const store = createStore(reducer, enhancer);
+  
 export default store;
