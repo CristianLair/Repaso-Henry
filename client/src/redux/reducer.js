@@ -17,7 +17,11 @@ export default function rootReducer(state = initialState,action) {
             episode: action.payload
         }
     }
-          
+        case "NEW_CHARACTER":{
+            return{
+                ...state,
+            }
+        }
   
       default:{
           return state

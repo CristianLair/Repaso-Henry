@@ -32,3 +32,17 @@ export function runEpisode(){
     
 }
 
+export function newChar(){
+    return function(dispatch){
+        axios.post('/character')
+        .then(data =>{
+            return dispatch({
+                type:"NEW_CHARACTER",
+                payload: data.data
+            })
+        })
+    }
+}
+
+
+

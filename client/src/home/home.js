@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import { Link } from 'react-router-dom';
 import { runCharacters } from '../redux/actions';
 import  {runEpisode} from '../redux/actions';
 import Card from './card';
@@ -21,8 +22,9 @@ const indexOfFirstRecipe = indexOfLastRecipes - characterPerpage
 const currentCharacters = allCharacter.slice(indexOfFirstRecipe,indexOfLastRecipes)
 const currentEpisode = allEpisode.slice(indexOfFirstRecipe,indexOfLastRecipes)
 let prueba = currentEpisode.map(e => e.name)
-let prueba2= prueba.pop()
-console.log('prueba concat',prueba2)
+let variable = Math.floor(Math.random()*prueba.length)
+console.log('prueba variable', variable)
+console.log('prueba concat',prueba)
 
 useEffect(()=>{
     dispatch(runCharacters(),
@@ -30,12 +32,21 @@ useEffect(()=>{
     )
 },[currentPage, dispatch])
 
+let count = -1;
 return (
     <div>
         <div>
             <h5 className={style.title}>Rick And Morty Api</h5>
             <div>
+            <Link type='button' to='/createCharacter'>
+            <button>Create tu personaje</button>
+            </Link>
             { currentCharacters?.map((e)=>{
+                if(count < 20){
+                    count++
+                }else{
+                    count = 0
+                }
                 return(
                     <div className={style.card}>
                     <Card 
@@ -43,8 +54,10 @@ return (
                 image={e.image}
                 species={e.species}
                 origin={e.origin.name}
-                episode={prueba2}
-            />
+                episode={prueba[count]}
+           
+           />
+               
                     </div>)
             })
             }
